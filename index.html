@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <!--Mengatur Karakter dan Judul Website-->
+  <meta charset="UTF-8">
+  <title>IoT Monitoring</title>
+
+  <!--Menghubungkan ke css-->
+  <link rel="stylesheet" href="style.css">
+
+  <!--Import Font-->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!--Library MQTT-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+
+</head>
+
+<body>
+
+  <!--Container Utama-->
+  <div class="dashboard">
+
+    <!--Header-->
+    <header>
+
+      <h1>MONITORING IOT</h1>
+
+      <!--Status MQTT-->
+      <div id="status" class="badge">
+        DISCONNECTED
+      </div>
+
+            <!-- STATUS MODE -->
+      <div class="mode-box">
+
+        <h3>
+          STATUS MODE :
+          <span id="modeText">
+            MODE RELAY
+          </span>
+        </h3>
+
+      </div>
+    </header>
+
+    <!--Tombol Kontrol-->
+    <div class="controls">
+
+    <button onclick="connectMQTT()">
+      CONNECT
+    </button>
+
+    <button onclick="disconnectMQTT()">
+      DISCONNECT
+    </button>
+
+    <button onclick="clearHistory()">
+      HAPUS RIWAYAT
+    </button>
+
+    <!-- MODE -->
+    <button onclick="setMode('relay')">
+      MODE RELAY
+    </button>
+
+    <button onclick="setMode('suhu')">
+      MODE SUHU
+    </button>
+
+  </div>
+
+    <!--Monitoring-->
+    <div class="stats">
+
+      <div class="stat-card">
+        <h3 id="suhu">-- °C</h3>
+        <p>Suhu</p>
+      </div>
+
+      <div class="stat-card">
+        <h3 id="hum">-- %</h3>
+        <p>Kelembapan</p>
+      </div>
+
+    </div>
+
+    <!--Relay-->
+    <div class="relay-container">
+
+      <h3>Relay Status</h3>
+
+      <div class="grid">
+
+        <!--Relay 1-->
+        <div class="relay-card">
+
+          <div>
+            R1
+            <span id="indikator1"
+                  class="indikator off"></span>
+          </div>
+
+          <div>
+            <button onclick="relay(1,'on')">
+              ON
+            </button>
+
+            <button onclick="relay(1,'off')">
+              OFF
+            </button>
+          </div>
+
+        </div>
+
+        <!--Relay 2-->
+        <div class="relay-card">
+
+          <div>
+            R2
+            <span id="indikator2"
+                  class="indikator off"></span>
+          </div>
+
+          <div>
+            <button onclick="relay(2,'on')">
+              ON
+            </button>
+
+            <button onclick="relay(2,'off')">
+              OFF
+            </button>
+          </div>
+
+        </div>
+
+        <!--Relay 3-->
+        <div class="relay-card">
+
+          <div>
+            R3
+            <span id="indikator3"
+                  class="indikator off"></span>
+          </div>
+
+          <div>
+            <button onclick="relay(3,'on')">
+              ON
+            </button>
+
+            <button onclick="relay(3,'off')">
+              OFF
+            </button>
+          </div>
+
+        </div>
+
+        <!--Relay 4-->
+        <div class="relay-card">
+
+          <div>
+            R4
+            <span id="indikator4"
+                  class="indikator off"></span>
+          </div>
+
+          <div>
+            <button onclick="relay(4,'on')">
+              ON
+            </button>
+
+            <button onclick="relay(4,'off')">
+              OFF
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!--Riwayat-->
+    <div class="visuals">
+
+      <div class="history-wrapper">
+
+        <h3>Riwayat Monitoring</h3>
+
+        <table id="historyTable">
+
+          <thead>
+            <tr>
+              <th>Waktu</th>
+              <th>Suhu</th>
+              <th>Hum</th>
+            </tr>
+          </thead>
+
+          <tbody></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--Menghubungkan JS-->
+  <script src="app.js"></script>
+
+</body>
+</html>
